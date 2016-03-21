@@ -16,13 +16,16 @@ import gate.util.GateException;
 import gate.util.persistence.PersistenceManager;
 
 public class CreateCorpus {
-	private static String folderPath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/";
-	private static String corpusPath = folderPath + "corpus";
+//	private static String folderPath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/";
+//	private static String corpusPath = folderPath + "corpus";
 	
 	public static void main(String[] args) throws GateException, IOException {
+		String installedGateDir = args[0];
+		String folderPath = args[1];
+		String corpusPath = args[2];
 		Properties props = System.getProperties();
 		String gateHome = "gate.home";
-		props.setProperty(gateHome, "/Applications/GATE_Developer_8.1");
+		props.setProperty(gateHome, installedGateDir);
 		Gate.init();
 		
 		File file = new File(corpusPath);

@@ -29,14 +29,19 @@ import java.util.Properties;
 
 public class ProofOfConcept {
 	private static final String TOKEN_CLASSIFIER_FEATURE_NAME = "classifier";
-	private String arffFilePath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
-	private String idxTrain =  "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
-	private String modelFile = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
+	private String arffFilePath;// = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
+	private String idxTrain;// =  "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
+	private String modelFile;// = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
+	private String corpusPath; //"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/corpus"
 	
 	private Corpus corpus; 
 	
-	public ProofOfConcept() throws GateException {
-		new File(idxTrain).mkdirs();
+	public ProofOfConcept(String arffFilePath, String idxTrain, String modelFile, String corpus) throws GateException {
+		this.arffFilePath = arffFilePath;
+		this.idxTrain = idxTrain;
+		this.modelFile = modelFile;
+		this.corpusPath = corpus;
+		new File(this.idxTrain).mkdirs();
 	}
 
 	public void run() throws PersistenceException, MalformedURLException, ResourceInstantiationException, ExecutionException{
@@ -52,7 +57,7 @@ public class ProofOfConcept {
 	}
 
 	private void loadCorpus() throws PersistenceException, MalformedURLException, ResourceInstantiationException{
-		  URL u = new File("/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/corpus").toURI().toURL(); 
+		  URL u = new File(corpusPath).toURI().toURL(); 
 		  SerialDataStore sds = new SerialDataStore(u.toString()); 
 		  sds.open(); //
 //		  sds.create();
@@ -142,12 +147,17 @@ public class ProofOfConcept {
 	}
 	
 	public static void main(String[] args) throws MalformedURLException, GateException {
+		String installedGateDir = args[0]; //"/Applications/GATE_Developer_8.1"
 		Properties props = System.getProperties();
 		String gateHome = "gate.home";
-		props.setProperty(gateHome, "/Applications/GATE_Developer_8.1");
+		props.setProperty(gateHome, installedGateDir);
 		Gate.init();
 		Gate.getCreoleRegister().registerComponent(WekaClassifierPR.class);
 
-		new ProofOfConcept().run();
+		String arffFilePath = args[1];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
+		String idxTrain =  args[2];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
+		String modelFile = args[3];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
+		String corpusPath = args[4]; 
+		new ProofOfConcept(arffFilePath,idxTrain,modelFile, corpusPath).run();
 	}
 }
