@@ -40,26 +40,26 @@ public class CreateCorpus {
 //		CorpusController application =
 //				(CorpusController)PersistenceManager.loadObjectFromFile(new File(corpusPath));
 		
-		File directory = new File(folderPath);
-		corpus.populate(directory.toURI().toURL(), null, null, false);
-		corpus.sync();
+//		File directory = new File(folderPath);
+//		corpus.populate(directory.toURI().toURL(), null, null, false);
+//		corpus.sync();
 		
-//		File folder = new File(folderPath);
-//		for(File docFile: folder.listFiles()){
-//			// load the document (using the specified encoding if one was given)
-//			System.out.println("Processing document " + docFile + "...");
-//			Document doc = Factory.newDocument(docFile.toURI().toURL());
-//			// put the document in the corpus
-//			
-//			corpus.add(doc);
-//			
-//			if(corpus.getLRPersistenceId() != null) {
-//		          // persistent corpus -> unload the document
-//		          corpus.unloadDocument(doc);
-//		          Factory.deleteResource(doc);
-//		        }
-//			
-//		}
+		File folder = new File(folderPath);
+		for(File docFile: folder.listFiles()){
+			// load the document (using the specified encoding if one was given)
+			System.out.println("Processing document " + docFile + "...");
+			Document doc = Factory.newDocument(docFile.toURI().toURL());
+			// put the document in the corpus
+			
+			corpus.add(doc);
+			
+			if(corpus.getLRPersistenceId() != null) {
+		          // persistent corpus -> unload the document
+		          corpus.unloadDocument(doc);
+		          Factory.deleteResource(doc);
+		        }
+			
+		}
 //		application.execute();
 		sds.close();
 		
