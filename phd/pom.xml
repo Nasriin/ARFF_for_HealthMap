@@ -27,7 +27,13 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+	<repositories>
+		<repository>
+			<id>majid-repo</id>
+			<name>Majid Laali repository</name>
+			<url>https://github.com/mjlaali/maven-repo/raw/master</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -36,9 +42,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>majid</groupId>
+			<groupId>clac.concordia.ca</groupId>
 			<artifactId>gate.ml</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+
 	</dependencies>
 </project>
