@@ -134,7 +134,7 @@ public class ProofOfConcept {
 		
 		String[] wordlists = {"from_OVAE_2_uniques"};
 		for(String wordList: wordlists){
-			mlConfiguration.addAttribute(new BooleanAnnotationType(wordList, null, "wordList_"+wordList), new NumaratorEncoder());
+			mlConfiguration.addAttribute(new BooleanAnnotationType(wordList, null, "wordList_"+wordList), new NumberEncoder());//new NumaratorEncoder());
 			for(String scope: scopes){
 				mlConfiguration.addAttribute(new AnnotationInTheDomain(wordList+"_IN_"+scope, null, wordList, null, scope), new NumberEncoder());
 			}
