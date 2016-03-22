@@ -134,7 +134,7 @@ public class ProofOfConcept {
 		
 		String[] wordlists = {"from_OVAE_2_uniques"};
 		for(String wordList: wordlists){
-			mlConfiguration.addAttribute(new BooleanAnnotationType(wordList, null, "wordList_"+wordList), new NumaratorEncoder());
+			mlConfiguration.addAttribute(new CountAnnotationType(wordList, null, "wordList_"+wordList), new NumberEncoder());
 			for(String scope: scopes){
 				mlConfiguration.addAttribute(new AnnotationInTheDomain(wordList+"_IN_"+scope, null, "wordList_"+wordList, null, scope), new NumberEncoder());
 			}
@@ -148,16 +148,23 @@ public class ProofOfConcept {
 	
 	public static void main(String[] args) throws MalformedURLException, GateException {
 		String installedGateDir = args[0]; //"/Applications/GATE_Developer_8.1"
+//		String installedGateDir = "/Applications/GATE_Developer_8.1";
 		Properties props = System.getProperties();
 		String gateHome = "gate.home";
 		props.setProperty(gateHome, installedGateDir);
 		Gate.init();
 		Gate.getCreoleRegister().registerComponent(WekaClassifierPR.class);
 
-		String corpusPath = args[1]; 
-		String arffFilePath = args[2];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
-		String idxTrain =  args[3];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
-		String modelFile = args[4];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
+		String corpusPath = args[1];
+		String arffFilePath = args[2];
+		String idxTrain =  args[3];
+		String modelFile = args[4];
+		
+//		String corpusPath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/corpus"; 
+//		String arffFilePath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/corpus.arff";//args[2];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
+//		String idxTrain =  "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/idxTrain";//args[3];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
+//		String modelFile = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/something";//args[4];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
 		new ProofOfConcept(arffFilePath,idxTrain,modelFile, corpusPath).run();
+		System.out.println("ProofOfConcept.main()");
 	}
 }

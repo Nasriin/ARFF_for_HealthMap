@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import gate.Annotation;
+import gate.Utils;
 import gate.AnnotationSet;
 import gate.Document;
 import ir.laali.gate.ml.attributecalculator.AbstractAttributeCalculator;
@@ -11,7 +12,7 @@ import ir.laali.gate.ml.attributecalculator.AttributeCalculator;
 
 public class AnnotationInTheDomain extends AbstractAttributeCalculator {
 
-	String annotationSetName; 
+	String annotationSetName_tense; 
 	String annotationType_tense; 
 	String annotationSetName_scope;
 	String annotationType_scope;
@@ -19,10 +20,10 @@ public class AnnotationInTheDomain extends AbstractAttributeCalculator {
 	 * 
 	 */
 
-	public AnnotationInTheDomain(String name, String annotationSetName, String annotationType_tense, 
+	public AnnotationInTheDomain(String name, String annotationSetName_tense, String annotationType_tense, 
 			String annotationSetName_scope, String annotationType_scope) {
 		setName(name);
-		this.annotationSetName = annotationSetName;
+		this.annotationSetName_tense = annotationSetName_tense;
 		this.annotationType_tense = annotationType_tense;
 		this.annotationSetName_scope = annotationSetName_scope;
 		this.annotationType_scope = annotationType_scope;
@@ -57,8 +58,8 @@ public class AnnotationInTheDomain extends AbstractAttributeCalculator {
 
 
 	private boolean intersection(Annotation scope, Annotation tense) {
-		return isBetween(scope.getStartNode().getOffset(), tense.getStartNode().getOffset(), tense.getEndNode().getOffset()) ||
-				isBetween(scope.getEndNode().getOffset(), tense.getStartNode().getOffset(), tense.getEndNode().getOffset());
+		return isBetween(tense.getStartNode().getOffset(), scope.getStartNode().getOffset(), scope.getEndNode().getOffset()) ||
+				isBetween(tense.getEndNode().getOffset(), scope.getStartNode().getOffset(), scope.getEndNode().getOffset());
 	}
 
 
