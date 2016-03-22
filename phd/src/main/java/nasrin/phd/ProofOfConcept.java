@@ -154,10 +154,10 @@ public class ProofOfConcept {
 		Gate.init();
 		Gate.getCreoleRegister().registerComponent(WekaClassifierPR.class);
 
-		String arffFilePath = args[1];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
-		String idxTrain =  args[2];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
-		String modelFile = args[3];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
-		String corpusPath = args[4]; 
+		String corpusPath = args[1]; 
+		String arffFilePath = args[2];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
+		String idxTrain =  args[3];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
+		String modelFile = args[4];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
 		new ProofOfConcept(arffFilePath,idxTrain,modelFile, corpusPath).run();
 	}
 }
