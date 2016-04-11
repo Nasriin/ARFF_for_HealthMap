@@ -123,8 +123,8 @@ public class ProofOfConcept {
 		
 //		mlConfiguration.addAttribute(new AnnotationInTheDomain("Tense_present"+"IN"+"ModalityDomainNN", null, "Tense_present", null, "ModalityDomainNN"), new NumberEncoder());
 		
-		String[] scopes = {"explicitNegDomainNN", "implicitNegDomainNN", "modalityDomainNN"};//, "Tense_empty","Tense_future", "Tense_past", "Tense_present",
-//				"Tense_modal_past", "Tense_modal_present", "aspect_empty", "aspect_indefinite", "aspect_perfect", "aspect_progressive", "voice_active", "voice_passive"};
+		String[] scopes = {"explicitNegDomainNN", "implicitNegDomainNN", "modalityDomainNN", "Tense_empty","Tense_future", "Tense_past", "Tense_present",
+				"Tense_modal_past", "Tense_modal_present", "aspect_empty", "aspect_indefinite", "aspect_perfect", "aspect_progressive", "voice_active", "voice_passive"};
 //		String[] wordlists = {"additives_word_1_comma_inversion", "Common_media_terms2_0_dequoted" ,"Common_media_terms2_1_comma_inversion", "Common_media_terms2_2_uniques",
 //		"Common_media_terms2_3_last_word", "Vaccine_terms_0_dequoted", "Vaccine_terms_1_comma_inversion", "Vaccine_terms_2_uniques","Vaccine_terms_3_last_word",
 //		"additives_word_0_dequoted", "additives_word_1_comma_inversion", "additives_word_2_uniques", "additives_word_3_last_word", "body_0_dequoted", 
@@ -132,7 +132,7 @@ public class ProofOfConcept {
 //		"from_OVAE_0_dequoted", "from_OVAE_1_comma_inversion", "from_OVAE_2_uniques", "from_OVAE_3_last_word", "med_effect_0_dequoted", "med_effect_1_comma_inversion",
 //		"med_effect_2_uniques", "med_effect_3_last_word", "vaers_all_0_dequoted", "vaers_all_1_comma_inversion", "vaers_all_2_uniques", "vaers_all_3_last_word"};
 		
-		String[] wordlists = {"from_OVAE_2_uniques"};
+		String[] wordlists = {"vaers_all_2_uniques", "med_effect_2_uniques","Common_media_terms2_2_uniques","chv_vaers_2_uniques"};//"from_OVAE_2_uniques",
 		for(String wordList: wordlists){
 			mlConfiguration.addAttribute(new CountAnnotationType(wordList, null, "wordList_"+wordList), new NumberEncoder());
 			for(String scope: scopes){
