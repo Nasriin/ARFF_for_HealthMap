@@ -141,7 +141,7 @@ public class ProofOfConcept {
 		}
 		
 		
-		mlConfiguration.setClassLabeler(new FeatureValue("aefiGOld", "Original markups", "Text", "aefiCategory"), new NumaratorEncoder());
+		mlConfiguration.setClassLabeler(new FeatureValue("AefiGOld", "Original markups", "Text", "aefiCategory"), new NumaratorEncoder());
 
 		return mlConfiguration;
 	}
