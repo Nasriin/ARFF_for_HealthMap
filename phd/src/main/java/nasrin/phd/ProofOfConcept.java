@@ -26,13 +26,15 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
-
+/**
+ * This class gets a GATE document and create an arff file out of the annotations in the GATE document
+ */
 public class ProofOfConcept {
 	private static final String TOKEN_CLASSIFIER_FEATURE_NAME = "classifier";
-	private String arffFilePath;// = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
-	private String idxTrain;// =  "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
-	private String modelFile;// = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
-	private String corpusPath; //"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/corpus"
+	private String arffFilePath;
+	private String idxTrain;
+	private String modelFile;
+	private String corpusPath;
 	
 	private Corpus corpus; 
 	
@@ -101,7 +103,7 @@ public class ProofOfConcept {
 		mlConfiguration.setModelFile(modelFile);	//use only in testing
 		mlConfiguration.configClassifier("weka.classifiers.trees.J48 -C 0.25 -M 2"); //use when the model has to be automatically generated
 
-		mlConfiguration.setInstanceExtractor(new AnnotationInstance("Original markups", "Text"));
+		mlConfiguration.setInstanceExtractor(new AnnotationInstance("Original markups", "tweet"));
 		
 //		mlConfiguration.setInstanceExtractor(new AnnotationInstance(null, ANNIEConstants.TOKEN_ANNOTATION_TYPE));
 		
@@ -120,50 +122,43 @@ public class ProofOfConcept {
 //		mlConfiguration.addAttribute(new SumDomainPolarities("ExNegDomain", null, "explicitNegDomainNN", -0.5), new NumberEncoder());
 //		mlConfiguration.addAttribute(new SumDomainPolarities("ImNegDomain", null, "implicitNegDomainNN", -0.5), new NumberEncoder());
 //		mlConfiguration.addAttribute(new SumDomainPolarities("ModalDomain", null, "modalityDomainNN", 0.5), new NumberEncoder());
-		
-//		mlConfiguration.addAttribute(new AnnotationInTheDomain("Tense_present"+"IN"+"ModalityDomainNN", null, "Tense_present", null, "ModalityDomainNN"), new NumberEncoder());
-		
+				
 		String[] scopes = {"explicitNegDomainNN", "implicitNegDomainNN", "modalityDomainNN", "Tense_empty","Tense_future", "Tense_past", "Tense_present",
 				"Tense_modal_past", "Tense_modal_present", "aspect_empty", "aspect_indefinite", "aspect_perfect", "aspect_progressive", "voice_active", "voice_passive"};
-//		String[] wordlists = {"additives_word_1_comma_inversion", "Common_media_terms2_0_dequoted" ,"Common_media_terms2_1_comma_inversion", "Common_media_terms2_2_uniques",
-//		"Common_media_terms2_3_last_word", "Vaccine_terms_0_dequoted", "Vaccine_terms_1_comma_inversion", "Vaccine_terms_2_uniques","Vaccine_terms_3_last_word",
-//		"additives_word_0_dequoted", "additives_word_1_comma_inversion", "additives_word_2_uniques", "additives_word_3_last_word", "body_0_dequoted", 
-//		"body_1_comma_inversion", "body_2_uniques", "body_3_last_word", "chv_vaers_0_dequoted", "chv_vaers_1_comma_inversion", "chv_vaers_2_uniques", "chv_vaers_3_last_word", 
-//		"from_OVAE_0_dequoted", "from_OVAE_1_comma_inversion", "from_OVAE_2_uniques", "from_OVAE_3_last_word", "med_effect_0_dequoted", "med_effect_1_comma_inversion",
-//		"med_effect_2_uniques", "med_effect_3_last_word", "vaers_all_0_dequoted", "vaers_all_1_comma_inversion", "vaers_all_2_uniques", "vaers_all_3_last_word"};
 		
-		String[] wordlists = {"vaers_all_2_uniques", "med_effect_2_uniques","Common_media_terms2_2_uniques","chv_vaers_2_uniques"};//"from_OVAE_2_uniques",
-		for(String wordList: wordlists){
-			mlConfiguration.addAttribute(new CountAnnotationType(wordList, null, "wordList_"+wordList), new NumberEncoder());
+		String[] wordLists = {"vaers_all_2_uniques", "med_effect_2_uniques","Common_media_terms2_2_uniques","chv_vaers_2_uniques"};//"from_OVAE_2_uniques",
+		//String[] wordLists = {"afinn"};
+		for(String wordList: wordLists){
+			mlConfiguration.addAttribute(new CountAnnotationType(wordList, null, wordList), new NumberEncoder());
 			for(String scope: scopes){
 				mlConfiguration.addAttribute(new AnnotationInTheDomain(wordList+"_IN_"+scope, null, "wordList_"+wordList, null, scope), new NumberEncoder());
 			}
 		}
 		
 		
-		mlConfiguration.setClassLabeler(new FeatureValue("AefiGOld", "Original markups", "Text", "aefiCategory"), new NumaratorEncoder());
+		mlConfiguration.setClassLabeler(new FeatureValue("SentimentGOld", "Original markups", "tweet", "sentiment"), new NumaratorEncoder());
 
 		return mlConfiguration;
 	}
 	
 	public static void main(String[] args) throws MalformedURLException, GateException {
-		String installedGateDir = args[0]; //"/Applications/GATE_Developer_8.1"
-//		String installedGateDir = "/Applications/GATE_Developer_8.1";
+		//String installedGateDir = args[0]; //"/Applications/GATE_Developer_8.1"
+		String installedGateDir = "/Applications/GATE_Developer_8.1";
 		Properties props = System.getProperties();
 		String gateHome = "gate.home";
 		props.setProperty(gateHome, installedGateDir);
 		Gate.init();
 		Gate.getCreoleRegister().registerComponent(WekaClassifierPR.class);
 
-		String corpusPath = args[1];
-		String arffFilePath = args[2];
-		String idxTrain =  args[3];
-		String modelFile = args[4];
+//		String corpusPath = args[1];
+//		String arffFilePath = args[2];
+//		String idxTrain =  args[3];
+//		String modelFile = args[4];
 		
-//		String corpusPath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/corpus"; 
-//		String arffFilePath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/corpus.arff";//args[2];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/115.arff";
-//		String idxTrain =  "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/idxTrain";//args[3];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/idxTrain/";
-//		String modelFile = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/22March2016/something";//args[4];//"/Users/Nasrin/Documents/Concordia/Thesis_PhD/Joa/training-gate-batch-2/MLCorpus/tree.model";
+		String corpusPath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/DataSet/SemEval_Twitts/output_batchPipeline2/output_batchPipeline2"; 
+		String arffFilePath = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/DataSet/SemEval_Twitts/output_batchPipeline2/b-dev-dist.arff";
+		String idxTrain =  "/Users/Nasrin/Documents/Concordia/Thesis_PhD/DataSet/SemEval_Twitts/output_batchPipeline2/idxTrain";
+		String modelFile = "/Users/Nasrin/Documents/Concordia/Thesis_PhD/DataSet/SemEval_Twitts/output_batchPipeline2/something";
 		new ProofOfConcept(arffFilePath,idxTrain,modelFile, corpusPath).run();
 		System.out.println("ProofOfConcept.main()");
 	}

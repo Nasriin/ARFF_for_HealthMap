@@ -1,11 +1,13 @@
 package nasrin.phd;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Document;
+import gate.FeatureMap;
 import ir.laali.gate.ml.attributecalculator.AbstractAttributeCalculator;
 
 @SuppressWarnings("serial")
