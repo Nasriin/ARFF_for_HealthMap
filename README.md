@@ -1,4 +1,4 @@
-# ARFF_for_HealthMap
+# Connect_GATE_to_Weka
 
 In this project, GATE as a Natural Language Processing tool is connected to Weka as a Machine Learning tool.
 
